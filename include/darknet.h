@@ -582,6 +582,9 @@ typedef struct{
     float left, right, top, bottom;
 } box_label;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 network *load_network(char *cfg, char *weights, int clear);
 load_args get_base_args(network *net);
@@ -599,6 +602,9 @@ typedef struct list{
     node *front;
     node *back;
 } list;
+
+
+
 
 pthread_t load_data(load_args args);
 list *read_data_cfg(char *filename);
@@ -753,11 +759,6 @@ void do_nms_sort(detection *dets, int total, int classes, float thresh);
 
 matrix make_matrix(int rows, int cols);
 
-#ifndef __cplusplus
-#ifdef OPENCV
-image get_image_from_stream(CvCapture *cap);
-#endif
-#endif
 void free_image(image m);
 float train_network(network *net, data d);
 pthread_t load_data_in_thread(load_args args);
@@ -796,5 +797,16 @@ int *read_intlist(char *s, int *n, int d);
 size_t rand_size_t();
 float rand_normal();
 float rand_uniform(float min, float max);
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#ifndef __cplusplus
+#ifdef OPENCV
+image get_image_from_stream(CvCapture *cap);
+#endif
+#endif
 
 #endif
